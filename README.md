@@ -16,16 +16,14 @@ This is installed as a module by executing `python3 setup.py install` in the bas
 
 The default constructor for the Library is a Gateway, which is constructed with at minimum of one key-word argument, that being an api-key.
 
-```
-:::python
+```python
 from printnodeapi.Gateway import Gateway
 my_account_gateway = Gateway(apikey='my_api_key')
 ```
 
 After creating a Gateway, you can access any requests as such:
 
-```
-:::python
+```python
 my_account_id = my_account_gateway.account.id 
 new_tag = my_account_gateway.ModifyTag("Likes","PrintNode")
 ```
@@ -33,16 +31,14 @@ new_tag = my_account_gateway.ModifyTag("Likes","PrintNode")
 #Initial Gateway Configuration
 
 You can authenticate in 2 ways other than using an api-key:
-```
-:::python
+```python
 Gateway(email='email',password='password')
 Gateway(clientkey='ckey')
 ```
 
 The three below will authenticate with access to child accounts of a specific user:
 
-```
-:::python
+```python
 Gateway(apikey='api-key',child_email='c_email')
 Gateway(apikey='api-key',child_ref='c_creator_ref')
 Gateway(apikey='api-key',child_id='c_id')
@@ -58,8 +54,7 @@ This handles anything that is associated with a computer, such as Printers, Prin
 ##Account lookup (https://www.printnode.com/docs/api/curl/#whoami)
 ###account(self)
 Returns an Account object of the currently authenticated account.
-```
-:::python
+```python
 from printnodeapi import Gateway
 
 gateway=Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10')
@@ -73,8 +68,7 @@ Mr
 ##Computer lookup (https://www.printnode.com/docs/api/curl/#computers)
 ###computers(self, computer)
 Given a set of computers, returns these computers. Given only one id, returns that computer.
-```
-:::python
+```python
 from printnodeapi import Gateway
 
 gateway=Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10')
@@ -93,8 +87,7 @@ There are four ways this can be run:
 * *printer* str/int, *computer* None: Gives a printer found from either an id or the name of a printer, taken from all possible printers.
 * *printer* None, *computer* int: Gives all printers attached to the computer given by an id.
 * *printer* str/int, *computer* int: Gives a printer found from either an id or the name of a printer, taken only from printers attached to the computer specified by the computer's id.
-```
-:::python
+```python
 from printnodeapi import Gateway
 
 gateway=Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10')
@@ -122,8 +115,7 @@ There are five ways this can be run:
 * *computer* int, *printer* int : Returns all printjobs relative to the printer specified by the argument *printer* from printers with access to *computer*.
 * *printjob* int : Returns specific printjob.
 
-```
-:::python
+```python
 from printnodeapi import Gateway
 
 gateway=Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10')
@@ -147,8 +139,7 @@ There are five ways this can be run:
 * *computer* int, *printer* int : Returns all printjobs relative to the printer specified by the argument *printer* from printers with access to *computer*.
 * *printjob* int : Returns specific printjob.
 
-```
-:::python
+```python
 from printnodeapi import Gateway
 
 gateway=Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10')
@@ -163,8 +154,7 @@ PrintJob(id=251153, printer=Printer(id=50120, computer=Computer(id=10027, name='
 ##State lookup (https://www.printnode.com/docs/api/curl/#printjob-states)
 ###states(self,printjob_set)
 Given a set of printjobs as a string (check https://www.printnode.com/docs/api/curl/#parameters for examples), returns a list of object type State. As each PrintJob can have many states, `states()` is a list of PrintJobs that each have a list of States.
-```
-:::python
+```python
 from printnodeapi import Gateway
 
 gateway=Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10')
@@ -183,8 +173,7 @@ This handles anything to do with accounts, such as Account creation, deletion an
 ##Tag lookup (https://www.printnode.com/docs/api/curl/#account-tagging)
 ###tag(self,tagname)
 Given a *tagname*, returns the value of that tag.
-```
-:::python
+```python
 from printnodeapi import Gateway
 
 gateway=Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10')
@@ -198,8 +187,7 @@ Everything!
 ##Tag modification
 ###ModifyTag(self,tagname,tagvalue)
 Given a *tagname* and *tagvalue*, either creates a tag with specifed value if *tagname* doesn't exist, otherwise changes the value.
-```
-:::python
+```python
 from printnodeapi import Gateway
 
 gateway=Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10')
@@ -214,8 +202,7 @@ PrintNode
 ##Tag deletion
 ###DeleteTag(self,tagname)
 Given a *tagname*, deletes that tag. Returns True on successful deletion.
-```
-:::python
+```python
 from printnodeapi import Gateway
 
 gateway=Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10')
@@ -231,8 +218,7 @@ Results:
 ##Account creation (https://www.printnode.com/docs/api/curl/#account-creation)
 ###CreateAccount(self,firstname,lastname,email,password,creator_ref=None,api_keys=None,tags=None)
 Creates an account with the specified values. The last three are optional.
-```
-:::python
+```python
 from printnodeapi import Gateway
 
 gateway=Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10')
@@ -255,8 +241,7 @@ A
 ##Account deletion (https://www.printnode.com/docs/api/curl/#account-deletion)
 ###DeleteAccount(self)
 Deletes the child account that is currently authenticated. Accounts can only be deleted if authenticated by a parent account's api-key and a reference to the child account being deleted (e.g the child account's id)
-```
-:::python
+```python
 from printnodeapi import Gateway
 
 gateway=Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10')
@@ -279,8 +264,7 @@ False
 ##Account modification (https://www.printnode.com/docs/api/curl/#account-modification)
 ###ModifyAccount(self,firstname=None,lastname=None,password=None,email=None,creator_ref=None)
 Given one or more arguments, changes the account details specified by the arguments.
-```
-:::python
+```python
 from printnodeapi import Gateway
 
 gateway=Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10')
@@ -304,8 +288,7 @@ B
 ##Api-key lookup (https://www.printnode.com/docs/api/curl/#account-apikeys)
 ###apikey(self,api_key)
 Returns value of api-key specified by the argument.
-```
-:::python
+```python
 from printnodeapi import Gateway
 
 gateway=Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10')
@@ -329,8 +312,7 @@ Results:
 ##Api-key creation
 ###CreateApikey(self,api_key)
 Creates an api-key with the api-key's reference given by the argument.
-```
-:::python
+```python
 from printnodeapi import Gateway
 
 gateway=Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10')
@@ -355,8 +337,7 @@ Results:
 ##Api-key deletion
 ###DeleteApikey(self,api_key)
 Deletes api-key specified by the argument.
-```
-:::python
+```python
 from printnodeapi import Gateway
 
 gateway=Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10')
@@ -381,8 +362,7 @@ Results:
 ##Client-key creation (https://www.printnode.com/docs/api/curl/#account-delegated-auth)
 ###clientkey(self,uuid,edition,version)
 Generates a clientkey for the account. 
-```
-:::python
+```python
 from printnodeapi import Gateway
 
 gateway=Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10')
@@ -416,8 +396,7 @@ This has three different outcomes:
 * *os* None and *client_ids* str: Given a set of ids (e.g "11-15"), return all clients in that set.
 
 Having both set will default to showing the most recent version for the os argument.
-```
-:::python
+```python
 from printnodeapi import Gateway
 
 gateway=Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10')
@@ -435,8 +414,7 @@ windows
 ##Download client controlling
 ###ModifyClientDownloads(self,client_id,enabled)
 Given a set of ids and either True or False, sets whether the clients are enabled or not. Returns a list of modified clients.
-```
-:::python
+```python
 from printnodeapi import Gateway
 
 gateway=Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10')
