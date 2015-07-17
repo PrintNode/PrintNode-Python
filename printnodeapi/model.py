@@ -45,9 +45,9 @@ class ModelFactory:
     def create_printer(self, printer_dict):
         fields = self._underscore_keys(printer_dict)
         fields['computer'] = self.create_computer(fields['computer'])
-       # if fields['capabilities']:
-        #    fields['capabilities'] = self.create_capabilities(
-         #       fields['capabilities'])
+        if fields['capabilities']:
+            fields['capabilities'] = self.create_capabilities(
+                fields['capabilities'])
         return Printer(**fields)
 
     def create_capabilities(self, capabilities_dict):
