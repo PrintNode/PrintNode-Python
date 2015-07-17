@@ -10,7 +10,7 @@ This is a Python client for PrintNode's API. This client allows you to access th
 
 # Installation
 
-This is installed as a module by executing `python3 setup.py install` in the base folder.
+This is installed as a module by executing `sudo python3 setup.py install` in the base folder.
 
 # Getting Started
 
