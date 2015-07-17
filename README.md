@@ -1,6 +1,6 @@
 # **PrintNode API Client Python Library**
 
-This is a Python client for PrintNode's API. This client allows you to access the API's functions for quick use in Python scripts.
+This is a Python library to interact with PrintNode's remote printing API. This client allows you to access the API's functions for quick use in Python scripts.
 
 # Requirements
 
