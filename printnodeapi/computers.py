@@ -11,7 +11,7 @@ class Computers:
         self._auth = auth
         self._factory = factory
 
-    def get_computers(self, computer):
+    def get_computers(self, computer=None):
         if self._is_multi_query(computer):
             results = self._auth.get('/computers')
             computers = self._factory.create_computers(results)
@@ -143,7 +143,7 @@ class Computers:
         else:
             printer_id = printers.id
 
-        if job_type not in ['pdf', 'raw']:
+        if job_type not in ['pdf', 'raw', 'binary']:
             raise ValueError('only support job_type of pdf or raw')
         if len([x for x in [uri, base64, binary] if x is not None]) != 1:
             raise ValueError('one and only one of the following parameters '
@@ -260,7 +260,7 @@ class LookupFailedError(RuntimeError):
             obj_name,
             field,
             value)
-        super().__init__(msg)
+        super(RuntimeError, self).__init__(msg)
 
         self.obj_name = obj_name
         self.field = field

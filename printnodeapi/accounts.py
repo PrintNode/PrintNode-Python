@@ -221,7 +221,7 @@ class LookupFailedError(RuntimeError):
             obj_name,
             field,
             value)
-        super().__init__(msg)
+        super(RuntimeError, self).__init__(msg)
 
         self.obj_name = obj_name
         self.field = field
