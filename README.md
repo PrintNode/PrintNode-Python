@@ -83,7 +83,9 @@ Results:
 5.2015-07-10 15:04:40.253763.TEST-COMPUTER
 '''
 ```
-##Printer lookup (https://www.printnode.com/docs/api/curl/#printers)
+##Printer lookup 
+https://www.printnode.com/docs/api/curl/#printers
+
 ###printers(self, computer=None, printer=None)
 There are four ways this can be run:
 
@@ -109,7 +111,9 @@ Results:
 10027.5.TEST-PRINTER
 '''
 ```
-##PrintJob lookup (https://www.printnode.com/docs/api/curl/#printjob-viewing)
+##PrintJob lookup 
+https://www.printnode.com/docs/api/curl/#printjob-viewing
+
 ###printjobs(self, computer=None, printer=None, printjob=None
 There are five ways this can be run:
 
