@@ -51,7 +51,9 @@ All of these will have the associated API doc next to them. Any of the argument 
 #Computers Library
 This handles anything that is associated with a computer, such as Printers, PrintJobs, States (of PrintJobs) and Scales.
 
-##Account lookup (https://www.printnode.com/docs/api/curl/#whoami)
+##Account lookup 
+https://www.printnode.com/docs/api/curl/#whoami
+
 ###account(self)
 Returns an Account object of the currently authenticated account.
 ```python
@@ -65,7 +67,9 @@ Results:
 Mr
 '''
 ```
-##Computer lookup (https://www.printnode.com/docs/api/curl/#computers)
+##Computer lookup 
+https://www.printnode.com/docs/api/curl/#computers
+
 ###computers(self, computer)
 Given a set of computers, returns these computers. Given only one id, returns that computer.
 ```python
@@ -129,7 +133,9 @@ Results:
 PrintJob(id=251127, printer=Printer(id=50118, computer=Computer(id=10027, name='5.2015-07-10 15:04:40.253763.TEST-COMPUTER', inet=None, inet6=None, hostname=None, version=None, create_timestamp='2015-07-10T15:04:40.253Z', state='created'), name='10027.1.TEST-PRINTER', description='description', capabilities={'capability_1': 'one', 'capability_2': 'two'}, default=True, create_timestamp='2015-07-10T15:04:40.253Z', state=None), title='50118.1.TEST-PRINTJOB', content_type='pdf_uri', source='API test endpoint', expire_at=None, create_timestamp='2015-07-10T15:04:40.253Z', state='new')
 '''
 ```
-##PrintJob creation (https://www.printnode.com/docs/api/curl/#printjob-creating)
+##PrintJob creation
+https://www.printnode.com/docs/api/curl/#printjob-creating
+
 ###PrintJob(self, computer=None, printer=None, job_type='pdf', title='PrintJob',options=None,authentication=None,uri=None,base64=None,binary=None)
 There are five ways this can be run:
 
@@ -151,7 +157,10 @@ Results:
 PrintJob(id=251153, printer=Printer(id=50120, computer=Computer(id=10027, name='5.2015-07-10 15:04:40.253763.TEST-COMPUTER', inet=None, inet6=None, hostname=None, version=None, create_timestamp='2015-07-10T15:04:40.253Z', state='created'), name='10027.3.TEST-PRINTER', description='description', capabilities={'capability_1': 'one', 'capability_2': 'two'}, default=False, create_timestamp='2015-07-10T15:04:40.253Z', state=None), title='PrintJob', content_type='pdf_uri', source='PythonApiClient', expire_at=None, create_timestamp='2015-07-10T15:05:27.087Z', state='new')
 '''
 ```
-##State lookup (https://www.printnode.com/docs/api/curl/#printjob-states)
+##State lookup
+
+https://www.printnode.com/docs/api/curl/#printjob-states
+
 ###states(self,printjob_set)
 Given a set of printjobs as a string (check https://www.printnode.com/docs/api/curl/#parameters for examples), returns a list of object type State. As each PrintJob can have many states, `states()` is a list of PrintJobs that each have a list of States.
 ```python
@@ -170,7 +179,9 @@ new
 #Accounts Library
 This handles anything to do with accounts, such as Account creation, deletion and modificaiton, api-key handling, tag handling and Client handling.
 
-##Tag lookup (https://www.printnode.com/docs/api/curl/#account-tagging)
+##Tag lookup 
+https://www.printnode.com/docs/api/curl/#account-tagging
+
 ###tag(self,tagname)
 Given a *tagname*, returns the value of that tag.
 ```python
@@ -215,7 +226,9 @@ Results:
 []
 '''
 ```
-##Account creation (https://www.printnode.com/docs/api/curl/#account-creation)
+##Account creation
+https://www.printnode.com/docs/api/curl/#account-creation
+
 ###CreateAccount(self,firstname,lastname,email,password,creator_ref=None,api_keys=None,tags=None)
 Creates an account with the specified values. The last three are optional.
 ```python
@@ -238,7 +251,9 @@ Results:
 A
 '''
 ```
-##Account deletion (https://www.printnode.com/docs/api/curl/#account-deletion)
+##Account deletion 
+https://www.printnode.com/docs/api/curl/#account-deletion
+
 ###DeleteAccount(self)
 Deletes the child account that is currently authenticated. Accounts can only be deleted if authenticated by a parent account's api-key and a reference to the child account being deleted (e.g the child account's id)
 ```python
@@ -261,7 +276,9 @@ Results:
 False
 '''
 ```
-##Account modification (https://www.printnode.com/docs/api/curl/#account-modification)
+##Account modification 
+https://www.printnode.com/docs/api/curl/#account-modification
+
 ###ModifyAccount(self,firstname=None,lastname=None,password=None,email=None,creator_ref=None)
 Given one or more arguments, changes the account details specified by the arguments.
 ```python
@@ -285,7 +302,9 @@ Results:
 B
 '''
 ```
-##Api-key lookup (https://www.printnode.com/docs/api/curl/#account-apikeys)
+##Api-key lookup #
+https://www.printnode.com/docs/api/curl/#account-apikeys
+
 ###apikey(self,api_key)
 Returns value of api-key specified by the argument.
 ```python
@@ -359,7 +378,9 @@ Results:
 []
 '''
 ```
-##Client-key creation (https://www.printnode.com/docs/api/curl/#account-delegated-auth)
+##Client-key creation 
+https://www.printnode.com/docs/api/curl/#account-delegated-auth
+
 ###clientkey(self,uuid,edition,version)
 Generates a clientkey for the account. 
 ```python
@@ -387,7 +408,9 @@ Results:
 ck-nwa2SSvSGl1YR5zrHDVVgfdpJ8JLfVCvwaCWj8dQXmZW
 '''
 ```
-##Download client lookup (https://www.printnode.com/docs/api/curl/#account-download-management)
+##Download client lookup 
+https://www.printnode.com/docs/api/curl/#account-download-management
+
 ###clients(self,client_ids=None,os=None)
 This has three different outcomes:
 
