@@ -141,13 +141,7 @@ PrintJob(id=251127, printer=Printer(id=50118, computer=Computer(id=10027, name='
 https://www.printnode.com/docs/api/curl/#printjob-creating
 
 ###PrintJob(self, computer=None, printer=None, job_type='pdf', title='PrintJob',options=None,authentication=None,uri=None,base64=None,binary=None)
-There are five ways this can be run:
-
-* No arguments : Returns all printjobs associated with the account.
-* *computer* int : Returns all printjobs relative to printers associated with the computer specified by the argument *computer*.
-* *printer* int : Returns all printjobs relative to the printer specificed by the argument *printer*.
-* *computer* int, *printer* int : Returns all printjobs relative to the printer specified by the argument *printer* from printers with access to *computer*.
-* *printjob* int : Returns specific printjob.
+Only one of uri, base64 and binary can be chosen.
 
 ```python
 from printnodeapi import Gateway
