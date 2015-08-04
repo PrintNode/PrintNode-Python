@@ -59,7 +59,7 @@ Returns an Account object of the currently authenticated account.
 ```python
 from printnodeapi import Gateway
 
-gateway=Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10')
+gateway=Gateway(url='https://api.printnode.com',apikey='secretAPIKey')
 print(gateway.account.firstname)
 
 '''
@@ -75,7 +75,7 @@ Given a set of computers, returns these computers. Given only one id, returns th
 ```python
 from printnodeapi import Gateway
 
-gateway=Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10')
+gateway=Gateway(url='https://api.printnode.com',apikey='secretAPIKey')
 print(gateway.computers(computer=10027).name)
 
 '''
@@ -96,7 +96,7 @@ There are four ways this can be run:
 ```python
 from printnodeapi import Gateway
 
-gateway=Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10')
+gateway=Gateway(url='https://api.printnode.com',apikey='secretAPIKey')
 print(gateway.printers(printer=50120).name)
 for printer in gateway.printers(computer=10027):
     print(printer.name)
@@ -126,7 +126,7 @@ There are five ways this can be run:
 ```python
 from printnodeapi import Gateway
 
-gateway=Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10')
+gateway=Gateway(url='https://api.printnode.com',apikey='secretAPIKey')
 printjob_id = gateway.printjobs(computer=10027)[0].id
 print(gateway.printjobs(printer=50120)[0].id)
 print(gateway.printjobs(printjob=printjob_id))
@@ -141,18 +141,12 @@ PrintJob(id=251127, printer=Printer(id=50118, computer=Computer(id=10027, name='
 https://www.printnode.com/docs/api/curl/#printjob-creating
 
 ###PrintJob(self, computer=None, printer=None, job_type='pdf', title='PrintJob',options=None,authentication=None,uri=None,base64=None,binary=None)
-There are five ways this can be run:
-
-* No arguments : Returns all printjobs associated with the account.
-* *computer* int : Returns all printjobs relative to printers associated with the computer specified by the argument *computer*.
-* *printer* int : Returns all printjobs relative to the printer specificed by the argument *printer*.
-* *computer* int, *printer* int : Returns all printjobs relative to the printer specified by the argument *printer* from printers with access to *computer*.
-* *printjob* int : Returns specific printjob.
+Only one of uri, base64 and binary can be chosen.
 
 ```python
 from printnodeapi import Gateway
 
-gateway=Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10')
+gateway=Gateway(url='https://api.printnode.com',apikey='secretAPIKey')
 print(gateway.PrintJob(printer=50120,options={"copies":2},uri="a.pdf"))
 
 
@@ -170,7 +164,7 @@ Given a set of printjobs as a string (check https://www.printnode.com/docs/api/c
 ```python
 from printnodeapi import Gateway
 
-gateway=Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10')
+gateway=Gateway(url='https://api.printnode.com',apikey='secretAPIKey')
 printjob_id = gateway.printjobs(computer=10027)[0].id
 print(gateway.states(printjob_id)[0][0].state)
 
@@ -191,7 +185,7 @@ Given a *tagname*, returns the value of that tag.
 ```python
 from printnodeapi import Gateway
 
-gateway=Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10')
+gateway=Gateway(url='https://api.printnode.com',apikey='secretAPIKey')
 print(gateway.tag("Likes"))
 
 '''
@@ -205,7 +199,7 @@ Given a *tagname* and *tagvalue*, either creates a tag with specifed value if *t
 ```python
 from printnodeapi import Gateway
 
-gateway=Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10')
+gateway=Gateway(url='https://api.printnode.com',apikey='secretAPIKey')
 gateway.ModifyTag("Likes","PrintNode")
 print(gateway.tag("Likes"))
 
@@ -220,7 +214,7 @@ Given a *tagname*, deletes that tag. Returns True on successful deletion.
 ```python
 from printnodeapi import Gateway
 
-gateway=Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10')
+gateway=Gateway(url='https://api.printnode.com',apikey='secretAPIKey')
 gateway.ModifyTag("Likes","PrintNode")
 gateway.DeleteTag("Likes")
 print(gateway.account.tags)
@@ -238,7 +232,7 @@ Creates an account with the specified values. The last three are optional.
 ```python
 from printnodeapi import Gateway
 
-gateway=Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10')
+gateway=Gateway(url='https://api.printnode.com',apikey='secretAPIKey')
 new_account = gateway.CreateAccount(
     firstname="A",
     lastname="Person",
@@ -246,7 +240,7 @@ new_account = gateway.CreateAccount(
     email="aperson@emailprovider.com",
     tags={"Likes":"Something"}
     )
-new_account_gateway = Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10',child_id=new_account["Account"]["id"])
+new_account_gateway = Gateway(url='https://api.printnode.com',apikey='secretAPIKey',child_id=new_account["Account"]["id"])
 print(new_account_gateway.account.firstname)
 new_account_gateway.DeleteAccount()
 
@@ -263,7 +257,7 @@ Deletes the child account that is currently authenticated. Accounts can only be 
 ```python
 from printnodeapi import Gateway
 
-gateway=Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10')
+gateway=Gateway(url='https://api.printnode.com',apikey='secretAPIKey')
 new_account = gateway.CreateAccount(
     firstname="A",
     lastname="Person",
@@ -271,7 +265,7 @@ new_account = gateway.CreateAccount(
     email="aperson@emailprovider.com",
     tags={"Likes":"Something"}
     )
-new_account_gateway = Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10',child_id=new_account["Account"]["id"])
+new_account_gateway = Gateway(url='https://api.printnode.com',apikey='secretAPIKey',child_id=new_account["Account"]["id"])
 new_account_gateway.DeleteAccount()
 print(new_account["Account"]["id"] in gateway.account.child_accounts)
 
@@ -288,7 +282,7 @@ Given one or more arguments, changes the account details specified by the argume
 ```python
 from printnodeapi import Gateway
 
-gateway=Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10')
+gateway=Gateway(url='https://api.printnode.com',apikey='secretAPIKey')
 new_account = gateway.CreateAccount(
     firstname="A",
     lastname="Person",
@@ -296,7 +290,7 @@ new_account = gateway.CreateAccount(
     email="aperson@emailprovider.com",
     tags={"Likes":"Something"}
     )
-new_account_gateway = Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10',child_id=new_account["Account"]["id"])
+new_account_gateway = Gateway(url='https://api.printnode.com',apikey='secretAPIKey',child_id=new_account["Account"]["id"])
 new_account_gateway.ModifyAccount(firstname="B")
 print(new_account_gateway.account.firstname)
 new_account_gateway.DeleteAccount()
@@ -314,7 +308,7 @@ Returns value of api-key specified by the argument.
 ```python
 from printnodeapi import Gateway
 
-gateway=Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10')
+gateway=Gateway(url='https://api.printnode.com',apikey='secretAPIKey')
 new_account = gateway.CreateAccount(
     firstname="A",
     lastname="Person",
@@ -323,7 +317,7 @@ new_account = gateway.CreateAccount(
     tags={"Likes":"Something"},
     api_keys=["Production"]
     )
-new_account_gateway = Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10',child_id=new_account["Account"]["id"])
+new_account_gateway = Gateway(url='https://api.printnode.com',apikey='secretAPIKey',child_id=new_account["Account"]["id"])
 print(new_account_gateway.api_key("Production"))
 new_account_gateway.DeleteAccount()
 
@@ -338,7 +332,7 @@ Creates an api-key with the api-key's reference given by the argument.
 ```python
 from printnodeapi import Gateway
 
-gateway=Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10')
+gateway=Gateway(url='https://api.printnode.com',apikey='secretAPIKey')
 new_account = gateway.CreateAccount(
     firstname="A",
     lastname="Person",
@@ -347,14 +341,14 @@ new_account = gateway.CreateAccount(
     tags={"Likes":"Something"},
     api_keys=["Production"]
     )
-new_account_gateway = Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10',child_id=new_account["Account"]["id"])
+new_account_gateway = Gateway(url='https://api.printnode.com',apikey='secretAPIKey',child_id=new_account["Account"]["id"])
 new_account_gateway.CreateApiKey("Development")
 print(new_account_gateway.account.api_keys)
 new_account_gateway.DeleteAccount()
 
 '''
 Results:
-{'Development': 'd9a29fd7c09130782a424c1aef8b3352a018ac8c', 'Production': 'f920f97cead0d86012d6749801b9f1e4f5ee1835'}
+{'Development': '123SecretAPIKey', 'Production': '456SecretAPIKey'}
 '''
 ```
 ##Api-key deletion
@@ -363,7 +357,7 @@ Deletes api-key specified by the argument.
 ```python
 from printnodeapi import Gateway
 
-gateway=Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10')
+gateway=Gateway(url='https://api.printnode.com',apikey='secretAPIKey')
 new_account = gateway.CreateAccount(
     firstname="A",
     lastname="Person",
@@ -372,7 +366,7 @@ new_account = gateway.CreateAccount(
     tags={"Likes":"Something"},
     api_keys=["Production"]
     )
-new_account_gateway = Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10',child_id=new_account["Account"]["id"])
+new_account_gateway = Gateway(url='https://api.printnode.com',apikey='secretAPIKey',child_id=new_account["Account"]["id"])
 new_account_gateway.DeleteApiKey("Production")
 print(new_account_gateway.account.api_keys)
 new_account_gateway.DeleteAccount()
@@ -390,7 +384,7 @@ Generates a clientkey for the account.
 ```python
 from printnodeapi import Gateway
 
-gateway=Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10')
+gateway=Gateway(url='https://api.printnode.com',apikey='secretAPIKey')
 new_account = gateway.CreateAccount(
     firstname="A",
     lastname="Person",
@@ -399,7 +393,7 @@ new_account = gateway.CreateAccount(
     tags={"Likes":"Something"},
     api_keys=["Production"]
     )
-new_account_gateway = Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10',child_id=new_account["Account"]["id"])
+new_account_gateway = Gateway(url='https://api.printnode.com',apikey='secretAPIKey',child_id=new_account["Account"]["id"])
 new_clientkey = new_account_gateway.clientkey(
     uuid="0a756864-602e-428f-a90b-842dee47f57e",
     edition="printnode",
@@ -426,7 +420,7 @@ Having both set will default to showing the most recent version for the os argum
 ```python
 from printnodeapi import Gateway
 
-gateway=Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10')
+gateway=Gateway(url='https://api.printnode.com',apikey='secretAPIKey')
 for client in gateway.clients(client_ids="11-12"):
     print(client.id)
 print(gateway.clients(os="windows").os)
@@ -444,7 +438,7 @@ Given a set of ids and either True or False, sets whether the clients are enable
 ```python
 from printnodeapi import Gateway
 
-gateway=Gateway(url='https://api.printnode.com',apikey='44784dd8d88be9631046ff83e9044419ff824b10')
+gateway=Gateway(url='https://api.printnode.com',apikey='secretAPIKey')
 gateway.ModifyClientDownloads(11,False)
 print(gateway.clients(client_ids=11)[0].enabled)
 
