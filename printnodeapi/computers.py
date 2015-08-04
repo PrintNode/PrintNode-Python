@@ -31,7 +31,6 @@ class Computers:
 
     def get_scales(self, computer, dev_name=None, dev_num=None):
         url = '/computer/'+str(computer)+'/scales'
-        scales = self._factory.create_scales(self._auth.get(url))
         if dev_name is not None:
             url = url+'/'+dev_name
             if dev_num is not None:
@@ -39,6 +38,7 @@ class Computers:
         if dev_num is not None and dev_name is None:
             temp_str = 'Device num stated without name - nothing found.'
             raise LookupError(temp_str)
+        scales = self._factory.create_scales(self._auth.get(url))
         return scales
 
     def get_states(self, pjob_set=None):

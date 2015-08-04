@@ -230,6 +230,7 @@ Capabilities = namedtuple('Capabilities', [
     'copies',
     'color',
     'dpis',
+    'duplex',
     'extent',
     'medias',
     'nup',

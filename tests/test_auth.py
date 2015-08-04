@@ -5,7 +5,7 @@ from printnodeapi.gateway import Gateway, Unauthorized
 from printnodeapi.model import Account
 from credentials import *
 
-API_ADDRESS = 'https://api.printnode.com'
+API_ADDRESS = API_ADDRESS
 
 
 def test_gateway():

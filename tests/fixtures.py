@@ -11,7 +11,7 @@ from printnodeapi.gateway import Gateway
 from printnodeapi.model import Computer, Printer, PrintJob, State, Account
 from printnodeapi.auth import Auth
 
-API_ADDRESS = 'https://api.printnode.com'
+API_ADDRESS = API_ADDRESS
 API_KEY = API_KEY
 
 ENTRY_SIZE = 5

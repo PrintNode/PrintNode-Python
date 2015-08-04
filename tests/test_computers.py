@@ -9,9 +9,22 @@ import time
 from fixtures import *
 
 from printnodeapi.gateway import Gateway
-from printnodeapi.model import Computer, Printer, PrintJob, State, Account
+from printnodeapi.model import Computer, Printer, PrintJob, State, Account, Scale
 from printnodeapi.auth import Auth
 
+def setup_module(module):
+    gateway = create_gateway()
+    gateway.TestDataGenerate()
+
+def teardown_module(module):
+    gateway = create_gateway()
+    gateway.TestDataDelete()
+
+@pytest.mark.parametrize("gateway", [(create_gateway())])
+def test_scales(gateway):
+    scales = gateway.scales(0)
+    for scale in scales:
+        assert isinstance(scale, Scale)
 
 @pytest.mark.parametrize("gateway", [(create_gateway())])
 def test_get_all_printers(gateway):
@@ -33,7 +46,6 @@ def test_query_printers_by_computer(gateway):
     for computer in gateway.computers():
         printers = gateway.printers(computer=computer.id)
         for printer in printers:
-            time.sleep(0.5)
             assert printer.computer.id == computer.id
             assert printer.computer.name == computer.name
 

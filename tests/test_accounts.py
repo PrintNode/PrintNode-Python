@@ -14,6 +14,13 @@ from fixtures import *
 
 ENTRY_SIZE = 5
 
+def setup_module(module):
+    gateway = create_gateway()
+    gateway.TestDataGenerate()
+
+def teardown_module(module):
+    gateway = create_gateway()
+    gateway.TestDataDelete()
 
 @pytest.mark.parametrize("gateway", [(create_gateway())])
 def test_create_delete_account(gateway):

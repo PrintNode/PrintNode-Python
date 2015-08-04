@@ -66,6 +66,12 @@ class Gateway:
         printjob = self.printjobs(printjob=printjob_id)
         return printjob
 
+    def TestDataGenerate(self):
+        self._auth.get('test/data/generate')
+
+    def TestDataDelete(self):
+        self._auth.delete('test/data/generate')
+
     def ModifyTag(self, tagname, tagvalue):
         tag = self._accounts.modify_tag(tagname, tagvalue)
         return tag
