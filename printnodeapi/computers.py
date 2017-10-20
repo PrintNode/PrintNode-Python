@@ -153,7 +153,10 @@ class Computers:
             if sys.version_info[0] < 3:
                 binary_bytes = newbytes(binary)
             else:
-                binary_bytes = binary.encode('latin-1')
+                if isinstance(binary, str):
+                    binary_bytes = binary.encode('latin-1')
+                else:
+                    binary_bytes = binary
             base64 = base_64.b64encode(binary_bytes)
             base64 = base64.decode('utf-8')
 
