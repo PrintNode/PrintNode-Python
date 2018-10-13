@@ -3,6 +3,33 @@ from collections import namedtuple
 
 from .util import camel_to_underscore
 
+def safe_tuple_populate(tuple_class, fields, defaults={}):
+    """
+    Instantiate a named tuple using *fields in a "safe" way. I.e. extra keys
+    are ignored and missing keys are populated by defaults dict
+
+    tuple_class :namedtuple/model
+    fields :dict
+    defaults :dict
+    """
+
+    assert issubclass(tuple_class, Model)
+    assert isinstance(fields, dict)
+    assert isinstance(defaults, dict)
+
+    fk = set(fields.keys())
+    tk = set(tuple_class._fields)
+
+    # add in missing fields using defaults if present
+    for key in (tk - fk):
+        fields.setdefault(key, defaults.get(key))
+
+    # remove any extra keys
+    for key in (fk - tk):
+        fields.pop(key)
+
+    return tuple_class(**fields)
+
 
 class ModelFactory:
 
@@ -10,25 +37,25 @@ class ModelFactory:
         fields = self._underscore_keys(account_dict)
         fields.setdefault('api_keys', [])
         fields.setdefault('permissions', [])
-        return Account(**fields)
+        return safe_tuple_populate(Account, fields)
 
     def create_clients(self, clients_dict):
         return self._map(self.create_client, clients_dict)
 
     def create_latest_download(self, client_dict):
         fields = self._underscore_keys(client_dict)
-        return Download(**fields)
+        return safe_tuple_populate(Download, fields)
 
     def create_client(self, client_dict):
         fields = self._underscore_keys(client_dict)
-        return Client(**fields)
+        return safe_tuple_populate(Client, fields)
 
     def create_scales(self, scales_dict):
         return self._map(self.create_scale, scales_dict)
 
     def create_scale(self, scale_dict):
         fields = self._underscore_keys(scale_dict)
-        return Scale(**fields)
+        return safe_tuple_populate(Scale, fields)
 
     def create_computers(self, computers_dict):
         return self._map(self.create_computer, computers_dict)
@@ -37,7 +64,7 @@ class ModelFactory:
         fields = self._underscore_keys(computer_dict)
         del fields['jre']
         self._rename_field(fields, 'inet_6', 'inet6')
-        return Computer(**fields)
+        return safe_tuple_populate(Computer, fields)
 
     def create_printers(self, printers_dict):
         return self._map(self.create_printer, printers_dict)
@@ -48,11 +75,11 @@ class ModelFactory:
         if fields['capabilities']:
             fields['capabilities'] = self.create_capabilities(
                 fields['capabilities'])
-        return Printer(**fields)
+        return safe_tuple_populate(Printer, fields)
 
     def create_capabilities(self, capabilities_dict):
         fields = self._underscore_keys(capabilities_dict)
-        return Capabilities(**fields)
+        return safe_tuple_populate(Capabilities, fields)
 
     def create_printjobs(self, printjobs_dict):
         return self._map(self.create_printjob, printjobs_dict)
@@ -60,7 +87,11 @@ class ModelFactory:
     def create_printjob(self, printjob_dict):
         fields = self._underscore_keys(printjob_dict)
         fields['printer'] = self.create_printer(fields['printer'])
-        return PrintJob(**fields)
+        fields.setdefault('content', None)
+        fields.setdefault('pages', None)
+        fields.setdefault('qty', 1)
+        fields.setdefault('options', {})
+        return safe_tuple_populate(PrintJob, fields)
 
     def create_states_map(self, states_dict_list):
         return self._map(self.create_states, states_dict_list)
@@ -70,7 +101,7 @@ class ModelFactory:
 
     def create_state(self, state_dict):
         fields = self._underscore_keys(state_dict)
-        return State(**fields)
+        return safe_tuple_populate(State, fields)
 
     def _underscore_keys(self, input_dict):
         return {
@@ -148,7 +179,11 @@ PrintJob = namedtuple('PrintJob', [
     'id',
     'printer',
     'title',
+    'content',
     'content_type',
+    'pages',
+    'qty',
+    'options',
     'source',
     'expire_at',
     'create_timestamp',

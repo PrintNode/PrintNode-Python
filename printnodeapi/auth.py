@@ -97,7 +97,7 @@ class Auth:
                 headers=request_headers,
                 **other_args)
 
-        content_type = response.headers['content-type']
+        content_type = response.headers.get('content-type')
         if content_type != 'application/json':
             template = 'Incorrect Content-Type "{}" for url "{}"'
             raise ValueError(template.format(content_type, url))
