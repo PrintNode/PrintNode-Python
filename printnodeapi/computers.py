@@ -11,17 +11,25 @@ class Computers:
         self._auth = auth
         self._factory = factory
 
-    def get_computers(self, computer=None):
+    def get_computers(self, computer=None, limit=None, after=None, dir=None):
+
+        params = self._create_pagination_params(limit, after, dir)
+
         if self._is_multi_query(computer):
-            results = self._auth.get('/computers')
-            computers = self._factory.create_computers(results)
+            url = '/computers'
+            if params is not None:
+                url = url + '?' + params
+            computers = self._factory.create_computers(self._auth.get(url))
             if isinstance(computer, str):
                 return [c for c in computers if c.name == computer]
             else:
                 return computers
         else:
             computer_id = self._get_computer_id(computer)
-            results = self._auth.get('/computers/{}'.format(computer_id))
+            url = '/computers/{}'.format(computer_id)
+            if params is not None:
+                url = url + '?' + params
+            results = self._auth.get(url)
             if len(results) == 0:
                 raise LookupError(
                     'computer not found with ID {}'.format(computer_id))
@@ -41,15 +49,19 @@ class Computers:
         scales = self._factory.create_scales(self._auth.get(url))
         return scales
 
-    def get_states(self, pjob_set=None):
+    def get_states(self, pjob_set=None, limit=None, after=None, dir=None):
 
         pjob_set = str(pjob_set)+"/" if pjob_set else ""
+        url = "/printjobs/"+pjob_set+"states"
+        params = self._create_pagination_params(limit, after, dir)
+        if params is not None:
+            url = url + '?' + params
         states = self._factory.create_states_map(
-            self._auth.get("/printjobs/"+pjob_set+"states"))
+            self._auth.get(url))
 
         return states
 
-    def get_printers(self, computer=None, printer=None):
+    def get_printers(self, computer=None, printer=None, limit=None, after=None, dir=None):
         """queries API for printers.
         the printer argument can be:
         * id of the printer, in which case a single printer is returned
@@ -64,9 +76,13 @@ class Computers:
         that doesn't exist
         """
 
+        params = self._create_pagination_params(limit, after, dir)
+
         if self._is_multi_query(printer):
             computer_ids = ','.join(map(str, self._get_computer_ids(computer)))
             url = '/computers/{}/printers'.format(computer_ids)
+            if params is not None:
+                url = url + '?' + params
             printers = self._factory.create_printers(self._auth.get(url))
             assert all(isinstance(p, Printer) for p in printers)
             if isinstance(printer, str):
@@ -75,17 +91,23 @@ class Computers:
                 return printers
         else:
             printer_id = self._get_printer_id(printer)
-            results = self._auth.get('/printers/{}'.format(printer_id))
-            printers = self._factory.create_printers(results)
+            url = '/printers/{}'.format(printer_id)
+            if params is not None:
+                url = url + '?' + params
+            printers = self._factory.create_printers(self._auth.get(url))
             assert all(isinstance(p, Printer) for p in printers)
             if len(printers) == 0:
                 raise LookupError('no printer with ID {}'.format(printer_id))
             return printers[0]
 
-    def get_printjobs(self, computer=None, printer=None, printjob=None):
+    def get_printjobs(self, computer=None, printer=None, printjob=None, limit=None, after=None, dir=None):
+        params = self._create_pagination_params(limit, after, dir)
+
         if self._is_multi_query(printjob):
             if computer is None and printer is None:
                 url = '/printjobs'
+                if params is not None:
+                    url = url + '?' + params
                 printjobs = self._factory.create_printjobs(self._auth.get(url))
                 if isinstance(printjob, str):
                     return [pj for pj in printjobs if pj.title == printjob]
@@ -103,6 +125,8 @@ class Computers:
                 printer_ids = [p.id for p in printers]
                 printer_url = ','.join(map(str, printer_ids))
                 url = '/printers/{}/printjobs'.format(printer_url)
+                if params is not None:
+                    url = url + '?' + params
                 printjobs = self._factory.create_printjobs(self._auth.get(url))
 
                 if isinstance(printjob, str):
@@ -124,6 +148,7 @@ class Computers:
             printer=None,
             job_type='pdf',  # PDF|RAW
             title='PrintJob',
+            qty=None,
             options=None,
             authentication=None,
             uri=None,
@@ -172,6 +197,9 @@ class Computers:
 
         if options is not None:
             printjob_data.update({"options": options})
+
+        if qty is not None:
+            printjob_data.update({"qty": qty})
 
         printjob_id = self._auth.post('/printjobs', printjob_data)
 
@@ -255,6 +283,25 @@ class Computers:
             for printer in printers
             if printer.name == printer_name]
 
+    def _create_pagination_params(self, limit, after, dir):
+        params = []
+        if limit is not None:
+            if isinstance(limit, int):
+                params.append('limit={}'.format(limit))
+            else:
+                raise TypeError('limit: "{}"'.format(type(limit)))
+        if after is not None:
+            if isinstance(after, int):
+                params.append('after={}'.format(after))
+            else:
+                raise TypeError('after: "{}"'.format(type(after)))
+        if dir is not None:
+            if dir == 'asc' or dir == 'desc':
+                params.append('dir={}'.format(dir))
+            else:
+                raise TypeError("dir must equal 'asc' or 'desc'")
+        if len(params) > 0:
+            return '&'.join(params)
 
 class LookupFailedError(RuntimeError):
 
