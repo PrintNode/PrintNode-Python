@@ -119,7 +119,7 @@ class Auth:
             raise Exception('status code: ' + str(response.status_code))
 
     def _is_hundreth(self, hundreth, number):
-        pattern = str(hundreth) + '\d{2,}'
+        pattern = str(hundreth) + r'\d{2,}'
         return bool(re.match(pattern, str(number)))
 
     def _fix_unicode(self, json_object):
